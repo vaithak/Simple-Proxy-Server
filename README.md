@@ -1,2 +1,3 @@
-# Personal-Web-Server
-My Personal Web Server to practise socket programming in C deployed on my raspberry pi.
+# Proxy-Server
+A simple proxy server written in C to practise socket programming.  
+It only handles GET and HEAD request.
