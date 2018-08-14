@@ -57,6 +57,21 @@ int socket(int domain, int type, int protocol); //	domain is PF_INET or PF_INET6
 	 												and protocol can be set to 0 to choose the proper protocol 
 	 												for the given type.
 
+int bind(int sockfd, struct sockaddr *my_addr, int addrlen);
+
+int connect(int sockfd, struct sockaddr *serv_addr, int addrlen);
+
+int listen(int sockfd, int backlog);
+
+int accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen); // Return a new socket descriptor
+
+For Server
+	getaddrinfo();
+	socket();
+	bind();
+	listen();
+	accept();
+
 */
 
 #include <stdio.h>
@@ -78,7 +93,7 @@ int main(int argc, char const *argv[])
 	struct addrinfo hints, *res,*p ;
 	char ipstr[INET6_ADDRSTRLEN];
 
-	memset(&hints, 0, sizeof hints);
+	memset(&hints, 0, sizeof(hints));
     hints.ai_family = AF_UNSPEC; // AF_INET or AF_INET6 to force version
     hints.ai_socktype = SOCK_STREAM;
 
