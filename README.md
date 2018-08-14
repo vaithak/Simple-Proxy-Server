@@ -2,7 +2,7 @@
 A simple proxy server written in C to practise socket programming.  
 It only handles GET and HEAD request.  
 
-### Learnings fron this project
+### Learnings from this project
   * Socket Programming  
   * Working of HTTP Protocol
   * Creating and handling child processes using fork, waitpid, sigaction etc.  
