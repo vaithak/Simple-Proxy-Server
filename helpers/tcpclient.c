@@ -28,7 +28,7 @@ int main(int argc, char const *argv[])
 	struct addrinfo hints,*res,*p;
 	memset(&hints,0,sizeof(hints));
 	hints.ai_family = AF_UNSPEC; // AF_INET or AF_INET6 to force version
-    hints.ai_socktype = SOCK_STREAM;
+  hints.ai_socktype = SOCK_STREAM;
 
 	int status;
 
@@ -64,15 +64,15 @@ int main(int argc, char const *argv[])
     	char ipstr[INET6_ADDRSTRLEN];
     	void *addr;
     	if (res->ai_family == AF_INET)
-		{ // IPv4
-            struct sockaddr_in *ipv4 = (struct sockaddr_in *)res->ai_addr;
-            addr = &(ipv4->sin_addr);
-        }
-        else
-        { // IPv6
-            struct sockaddr_in6 *ipv6 = (struct sockaddr_in6 *)res->ai_addr;
-            addr = &(ipv6->sin6_addr);
-		}
+			{ // IPv4
+        struct sockaddr_in *ipv4 = (struct sockaddr_in *)res->ai_addr;
+        addr = &(ipv4->sin_addr);
+      }
+      else
+      { // IPv6
+	      struct sockaddr_in6 *ipv6 = (struct sockaddr_in6 *)res->ai_addr;
+	      addr = &(ipv6->sin6_addr);
+			}
 
     	inet_ntop(res->ai_family, addr, ipstr, sizeof(ipstr));
     	printf("Connection Setup with: %s (%s)\n", argv[1], ipstr);
@@ -95,7 +95,7 @@ int main(int argc, char const *argv[])
     {
     	printf("\nEnter the string you want to send, end your string with * : ");
     	char msg_send[80];// Maximum length is 80 characters for the message to send
-    	scanf("%[^*]s",msg_send);
+    	scanf(" %[^*] ",msg_send);
     	int len = strlen(msg_send);
 
 			start = clock();

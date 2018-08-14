@@ -30,4 +30,3 @@ tcpclient.o: tcpclient.c
 
 clean:
 	rm *.o *.out 2>/dev/null
-	
