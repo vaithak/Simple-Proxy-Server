@@ -7,6 +7,6 @@ It only handles GET and HEAD request.
   * Working of HTTP Protocol
   * Creating and handling child processes using fork, waitpid, sigaction etc.  
   
-[Fork System Call](https://www.geeksforgeeks.org/fork-system-call/)  
-[Zombie and Orphan Processes](https://www.geeksforgeeks.org/zombie-and-orphan-processes-in-c/)  
-[Preventing Zombie Processes](https://www.geeksforgeeks.org/zombie-processes-prevention/)  
+[Fork System Call](https://utiny.herokuapp.com/fZ)  
+[Zombie and Orphan Processes](https://utiny.herokuapp.com/f9)  
+[Preventing Zombie Processes](https://utiny.herokuapp.com/gj)  
