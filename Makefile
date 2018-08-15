@@ -8,13 +8,24 @@ CFLAGS=-c -Wall
 vpath %.c src helpers
 vpath %.h include
 
-all: showip.out tcpclient.out
+all: proxy.out showip.out tcpclient.out
 
-install: showip.out tcpclient.out
+install: proxy.out showip.out tcpclient.out
+	chmod +x proxy.out
 	chmod +x showip.out
 	chmod +x tcpclient.out
+	mv proxy.out /usr/local/bin/proxy
 	mv showip.out /usr/local/bin/showip
 	mv tcpclient.out /usr/local/bin/tcpclient
+
+proxy.out: proxy_parse.o proxy.o
+	$(CC) -o $@ proxy_parse.o proxy.o
+
+proxy_parse.o:	proxy_parse.c
+	$(CC) $(CFLAGS) $<
+
+proxy.o: proxy.c
+	$(CC) $(CFLAGS) $<
 
 showip.out: showip.o
 	$(CC) -o $@ $<
