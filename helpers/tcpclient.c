@@ -140,6 +140,9 @@ int main(int argc, char const *argv[])
 					break;
 			}while(numbytes > 0);
 
+			if(numbytes == 0)
+				break;
+				
 			end = clock();
 			printf("\nRound Trip Time: %lf ms",1000*((double)(end-start))/CLOCKS_PER_SEC);
 

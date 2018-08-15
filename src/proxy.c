@@ -28,7 +28,7 @@ void shiftMsg(char* start,int positions)
 // SEND GET REQUEST
 int sendRequest(struct ParsedRequest *req, char *host, char response[], int response_len, int newsock)
 {
-  printf("%s\n",req->protocol );
+  // printf("%s\n",req->protocol );
   req->protocol = "";
   req->host = "";
   // req->path;
@@ -48,7 +48,7 @@ int sendRequest(struct ParsedRequest *req, char *host, char response[], int resp
   {
       perror("client: socket");
   }
-  printf("%s\n",host);
+  // printf("%s\n",host);
   if(connect(sockfd, res->ai_addr, res->ai_addrlen) != -1)
   {
   	// convert the IP to a string and print it:
@@ -84,8 +84,8 @@ int sendRequest(struct ParsedRequest *req, char *host, char response[], int resp
     return -1;
   }
   msg_send[len]='\0';
-  shiftMsg(msg_send+4 + (msg_send[3] == 'D'),3); // Handling both GET and HEAD requests together
-  printf("%s\n", msg_send);
+  shiftMsg(msg_send+4,3);
+  // printf("%s\n", msg_send);
   len = strlen(msg_send);
   int bytes_sent = send(sockfd, msg_send, len+1, 0);
   printf("Bytes Sent: %d\n",bytes_sent );
@@ -164,30 +164,26 @@ int handleRequest(int newsock, struct sockaddr_in client_address)
         // printf("data: %s\n",c);
         struct ParsedRequest *req = ParsedRequest_create();
         if (ParsedRequest_parse(req, request, strlen(request)) < 0) {
-            printf("parse failed\n");
-            close(newsock);
-            return -1;
+          char *errorRes = "400 Bad Request";
+          write(newsock, errorRes, strlen(errorRes));
+          ParsedRequest_destroy(req);
+          return close(newsock);
         }
 
         char msg[MAXDATASIZE];
         if( strcmp(req->method, "GET") == 0 )
         {
-          // ParsedHeader_set(req,"Connection","close");
-          if(sendRequest(req,req->host,msg,MAXDATASIZE,newsock) != -1)
-            return 1;
-            // write(newsock, msg, strlen(msg));
-        }
-        else if(strcmp(req->method, "HEAD") == 0)
-        {
           ParsedHeader_set(req,"Connection","close");
           if(sendRequest(req,req->host,msg,MAXDATASIZE,newsock) != -1)
-            return 1;
+            continue;
             // write(newsock, msg, strlen(msg));
         }
         else
         {
-          char *errorRes = "500 Internal Server Error";
+          char *errorRes = "500 Internal Server Error(Only Get is Implemented)";
           write(newsock, errorRes, strlen(errorRes));
+          ParsedRequest_destroy(req);
+          return close(newsock);
         }
 
         ParsedRequest_destroy(req);
@@ -236,6 +232,7 @@ int main(int argc, char const *argv[])
     perror("Listen error");
   }
 
+  printf("Proxy Server listening on port:%s\n", port);
   struct sigaction sa;
   memset(&sa, 0, sizeof(sa));
   sa.sa_handler = my_sigchld_handler;
@@ -264,7 +261,3 @@ int main(int argc, char const *argv[])
     close(sockfd);
 
 }
-
-// GET / HTTP/1.0
-// If-Modified-Since: Sat, 29 Oct 1994 19:43:31 GMT
-// Connection: close
