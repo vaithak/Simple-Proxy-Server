@@ -2,6 +2,23 @@
 A simple proxy server written in C to practise socket programming.  
 It only handles GET request.  
 
+## Build
+```
+ $ make
+ $ make install
+```  
+
+## Proxy Server Usage (default port is 3000)
+```
+ $ proxy <port_no> 
+```  
+
+## Helper programs ( installed along with proxy in make install )
+```
+ $ showip <host_name>                 => returns IPV4 or IPV6 of host.
+ $ tcpclient <host_name> <port_no>    => sets up a tcp connection to the host
+```  
+
 ### Learnings from this project
   * Socket Programming  
   * Working of HTTP Protocol
